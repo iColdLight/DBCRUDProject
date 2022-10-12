@@ -19,10 +19,7 @@ public class MainView {
         while (!isInterrupted) {
             System.out.println("Select: developer, skill, speciality");
             System.out.println("Enter 'exit' to abort");
-            String entity = scanner.nextLine();
-            if (entity.equalsIgnoreCase("developer")){
-                System.out.println("Enter a command: ");
-            }
+
         }
     }
 }
