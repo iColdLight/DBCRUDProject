@@ -1,10 +1,9 @@
 package net.coldlight.dbcrudapp.service;
 
 
-import net.coldlight.dbcrudapp.model.Developer;
 import net.coldlight.dbcrudapp.model.Skill;
 import net.coldlight.dbcrudapp.repository.SkillRepository;
-import net.coldlight.dbcrudapp.repository.SkillRepositoryImpl;
+import net.coldlight.dbcrudapp.repository.jdbc.JdbcSkillRepositoryImpl;
 
 import java.util.List;
 
@@ -40,11 +39,12 @@ public class SkillService {
         throw new RuntimeException("Skill with ID = " + id + "not found");
     }
 
-    public void deleteSkillByID (Long id){
+    public Skill deleteSkillByID (Long id){
         Skill skill = skillRepository.getByID(id);
         if (skill == null){
             throw new RuntimeException("Developer with ID = " + id + "not found");
         }
         skillRepository.delete(skill);
+        return skill;
     }
 }

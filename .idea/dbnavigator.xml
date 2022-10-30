@@ -41,8 +41,11 @@
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="a970b1a7-f3dc-4ab6-84dc-89f95260a84d" dataset="test1.databasechangelog" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="a970b1a7-f3dc-4ab6-84dc-89f95260a84d" dataset="exercise_1.address" active-filter-id="" />
+    <filter-actions connection-id="a970b1a7-f3dc-4ab6-84dc-89f95260a84d" dataset="test1.developers_skills" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="a970b1a7-f3dc-4ab6-84dc-89f95260a84d" dataset="test1.skills" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="a970b1a7-f3dc-4ab6-84dc-89f95260a84d" dataset="test1.developers" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="a970b1a7-f3dc-4ab6-84dc-89f95260a84d" dataset="mysql.databasechangeloglock" active-filter-id="" />
+    <filter-actions connection-id="a970b1a7-f3dc-4ab6-84dc-89f95260a84d" dataset="test1.specialities" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="a970b1a7-f3dc-4ab6-84dc-89f95260a84d" dataset="mysql.databasechangelog" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">

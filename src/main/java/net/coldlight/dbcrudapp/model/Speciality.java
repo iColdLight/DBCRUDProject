@@ -10,6 +10,11 @@ public class Speciality {
     public Speciality() {
     }
 
+    public Speciality(Long id, String specialityName) {
+        this.id = id;
+        this.specialityName = specialityName;
+    }
+
     public Speciality(String specialityName) {
         this.specialityName = specialityName;
     }
@@ -36,6 +41,12 @@ public class Speciality {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "specialityName='" + specialityName + '\'' +
+                '}';
     }
 
     @Override

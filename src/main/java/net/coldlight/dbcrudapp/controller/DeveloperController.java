@@ -1,17 +1,15 @@
 package net.coldlight.dbcrudapp.controller;
 
 import net.coldlight.dbcrudapp.model.Developer;
-import net.coldlight.dbcrudapp.repository.DeveloperRepositoryImpl;
+import net.coldlight.dbcrudapp.repository.jdbc.JdbcDeveloperRepositoryImpl;
 import net.coldlight.dbcrudapp.service.DeveloperService;
 
 import java.util.List;
 
 public class DeveloperController {
-    private final DeveloperService developerService;
+    private final DeveloperService developerService = new DeveloperService(new JdbcDeveloperRepositoryImpl());
 
-    public DeveloperController(DeveloperService developerService) {
-        this.developerService = developerService;
-    }
+
 
     public Developer createDeveloper (String firstName, String lastName){
         return developerService.createDeveloper(firstName, lastName);

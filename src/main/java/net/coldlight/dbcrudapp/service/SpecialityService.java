@@ -1,15 +1,16 @@
 package net.coldlight.dbcrudapp.service;
 
 
-import net.coldlight.dbcrudapp.model.Skill;
 import net.coldlight.dbcrudapp.model.Speciality;
 import net.coldlight.dbcrudapp.repository.SpecialityRepository;
-import net.coldlight.dbcrudapp.repository.SpecialityRepositoryImpl;
+import net.coldlight.dbcrudapp.repository.jdbc.JdbcSpecialityRepositoryImpl;
 
 import java.util.List;
 
 public class SpecialityService {
     private final SpecialityRepository specialityRepository;
+
+
 
     public SpecialityService(SpecialityRepository specialityRepository) {
         this.specialityRepository = specialityRepository;

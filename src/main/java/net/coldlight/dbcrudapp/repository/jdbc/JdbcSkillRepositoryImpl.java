@@ -1,19 +1,19 @@
-package net.coldlight.dbcrudapp.repository;
+package net.coldlight.dbcrudapp.repository.jdbc;
 
-import net.coldlight.dbcrudapp.model.Developer;
 import net.coldlight.dbcrudapp.model.Skill;
+import net.coldlight.dbcrudapp.repository.JdbcUtils;
+import net.coldlight.dbcrudapp.repository.SkillRepository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SkillRepositoryImpl implements SkillRepository{
-    private static final Connection connection = DataBaseConnection.getInstance().getConnection();
+public class JdbcSkillRepositoryImpl implements SkillRepository {
 
     @Override
     public List<Skill> getAll() {
         List<Skill> skillList = new ArrayList<>();
-        try (Statement statement = connection.createStatement()) {
+        try (Statement statement = JdbcUtils.getStatement()) {
             String sql = "select * from skills";
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
@@ -33,8 +33,8 @@ public class SkillRepositoryImpl implements SkillRepository{
     @Override
     public Skill getByID(Long id) {
         Skill skill = new Skill(null);
-        try (Statement statement = connection.createStatement()) {
-            String sql = "select * from skills where id = " + (long)id;
+        try (Statement statement = JdbcUtils.getStatement()) {
+            String sql = String.format("select * from skills where id = %s", id);
             ResultSet resultSet = statement.executeQuery(sql);
             resultSet.next();
             skill.setId(id);
@@ -49,8 +49,9 @@ public class SkillRepositoryImpl implements SkillRepository{
 
     @Override
     public Skill save(Skill skill) {
-        try (Statement statement = connection.createStatement()) {
+        try (Statement statement = JdbcUtils.getStatement()) {
             String sql = "insert into skills (skill_name) values('" + skill.getSkillName() + "')";
+            //String sql = String.format("insert into skills (skill_name) values %s", skill.getSkillName());
             statement.executeUpdate(sql);
         }
         catch (SQLException e) {
@@ -61,8 +62,8 @@ public class SkillRepositoryImpl implements SkillRepository{
 
     @Override
     public Skill update(Skill skill) {
-        String sql = "update skill set skill_name=? where id ='" + skill.getId() + "'";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        String sql = String.format("update skills set skill_name=? where id = %s", skill.getId());
+        try (PreparedStatement preparedStatement = JdbcUtils.getPreparedStatement(sql)) {
             preparedStatement.setString(1, skill.getSkillName());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -73,8 +74,8 @@ public class SkillRepositoryImpl implements SkillRepository{
 
     @Override
     public void delete(Skill skill) {
-        try (Statement statement = connection.createStatement()) {
-            String sql = "delete from skills where skill_name = '" + skill.getSkillName() + "'";
+        try (Statement statement = JdbcUtils.getStatement()) {
+            String sql = String.format("delete from skills where id = %s", skill.getId());
             statement.executeUpdate(sql);
         }
         catch (SQLException e) {

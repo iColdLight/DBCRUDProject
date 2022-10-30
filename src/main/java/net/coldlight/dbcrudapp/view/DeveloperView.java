@@ -4,15 +4,13 @@ package net.coldlight.dbcrudapp.view;
 import net.coldlight.dbcrudapp.controller.DeveloperController;
 import net.coldlight.dbcrudapp.model.Developer;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class DeveloperView {
-    private final DeveloperController developerController;
+    private final DeveloperController developerController = new DeveloperController();
     private final Scanner scanner = new Scanner(System.in);
 
-    public DeveloperView(DeveloperController developerController) {
-        this.developerController = developerController;
-    }
 
     public void createDeveloper() {
         System.out.println("Enter developer First name: ");
@@ -24,18 +22,21 @@ public class DeveloperView {
     }
 
     public void getAllDevelopers (){
-        developerController.getAllDevelopers();
+        List<Developer> allDevelopers = developerController.getAllDevelopers();
+        for(Developer developer: allDevelopers){
+            System.out.println(developer);
+        }
     }
 
     public void getDeveloperByID (){
         System.out.println("Enter developer ID: ");
         Long id = scanner.nextLong();
-        developerController.getDeveloperByID(id);
+        System.out.println(developerController.getDeveloperByID(id));
     }
 
     public void updateDeveloper(){
         System.out.println("Enter developer id you want to update: ");
-        Long id = scanner.nextLong();
+        Long id = Long.parseLong(scanner.nextLine());
         System.out.println("Enter new First name: ");
         String newFirstName = scanner.nextLine();
         System.out.println("Enter new Last name: ");

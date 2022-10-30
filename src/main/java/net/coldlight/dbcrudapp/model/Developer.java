@@ -16,6 +16,20 @@ public class Developer {
     public Developer() {
     }
 
+    public Developer(Long id, String firstName, String lastName) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public Developer(Long id, String firstName, String lastName, Speciality speciality, List<Skill> skills) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.speciality = speciality;
+        this.skills = skills;
+    }
+
     public Developer(String firstName, String lastName, Speciality speciality, List<Skill> skills) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -23,11 +37,9 @@ public class Developer {
         this.skills = skills;
     }
 
-    public Developer(Long id, String firstName, String lastName) {
-        this.id = id;
+    public Developer(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-
     }
 
 

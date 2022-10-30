@@ -3,6 +3,7 @@ package net.coldlight.dbcrudapp.view;
 import net.coldlight.dbcrudapp.controller.SpecialityController;
 import net.coldlight.dbcrudapp.model.Speciality;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class SpecialityView {
@@ -17,19 +18,22 @@ public class SpecialityView {
     }
 
     public void getAllSpecialities (){
-        specialityController.getAllSpecialities();
+        List<Speciality> allSpecialities = specialityController.getAllSpecialities();
+        for (Speciality speciality: allSpecialities){
+            System.out.println(speciality);
+        }
     }
 
     public void getSpecialityByID (){
         System.out.println("Enter speciality ID: ");
         Long id = scanner.nextLong();
-        specialityController.getSpecialityByID(id);
+        System.out.println(specialityController.getSpecialityByID(id));
 
     }
 
     public void updateSpeciality (){
         System.out.println("Enter speciality ID you want to update: ");
-        Long id = scanner.nextLong();
+        Long id = Long.parseLong(scanner.nextLine());
         System.out.println("Enter a new speciality name: ");
         String newSpeciality = scanner.nextLine();
         specialityController.updateSpeciality(id, newSpeciality);

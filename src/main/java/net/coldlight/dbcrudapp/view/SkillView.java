@@ -4,6 +4,7 @@ package net.coldlight.dbcrudapp.view;
 import net.coldlight.dbcrudapp.controller.SkillController;
 import net.coldlight.dbcrudapp.model.Skill;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class SkillView {
@@ -19,19 +20,22 @@ public class SkillView {
     }
 
     public void getAllSkills (){
-        skillController.getAllSkills();
+        List<Skill> allSkills = skillController.getAllSkills();
+        for(Skill skill: allSkills){
+            System.out.println(skill);
+        }
     }
 
     public void getSkillByID (){
         System.out.println("Enter skill ID: ");
         Long id = scanner.nextLong();
-        skillController.getSkillByID(id);
+        System.out.println(skillController.getSkillByID(id));
 
     }
 
     public void updateSkill (){
         System.out.println("Enter skill id you want to update: ");
-        Long id = scanner.nextLong();
+        Long id = Long.parseLong(scanner.nextLine());
         System.out.println("Enter a new skill name: ");
         String newSkill = scanner.nextLine();
         skillController.updateSkill(id, newSkill);
@@ -40,6 +44,7 @@ public class SkillView {
     public void deleteSkill(){
         System.out.println("Enter skill ID you want to delete: ");
         Long skillID = scanner.nextLong();
-        skillController.deleteSkill(skillID);
+        Skill skill = skillController.deleteSkill(skillID);
+        System.out.println("Skill " + skill + " was deleted");
     }
 }

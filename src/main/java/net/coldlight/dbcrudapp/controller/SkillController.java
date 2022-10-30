@@ -1,17 +1,15 @@
 package net.coldlight.dbcrudapp.controller;
 
 import net.coldlight.dbcrudapp.model.Skill;
+import net.coldlight.dbcrudapp.repository.jdbc.JdbcSkillRepositoryImpl;
 import net.coldlight.dbcrudapp.service.SkillService;
 
 import java.util.List;
 
 public class SkillController {
 
-    private final SkillService skillService;
+    private final SkillService skillService = new SkillService(new JdbcSkillRepositoryImpl());
 
-    public SkillController(SkillService skillService) {
-        this.skillService = skillService;
-    }
 
     public Skill createSkill (String name) {
         return skillService.createSkill(name);
@@ -29,8 +27,8 @@ public class SkillController {
         return skillService.updateSkill(id, newSkill);
     }
 
-    public void deleteSkill (Long id){
-        skillService.deleteSkillByID(id);
+    public Skill deleteSkill (Long id){
+        return skillService.deleteSkillByID(id);
     }
 }
 

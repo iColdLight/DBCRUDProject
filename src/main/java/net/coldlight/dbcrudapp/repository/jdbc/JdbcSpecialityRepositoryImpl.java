@@ -1,19 +1,19 @@
-package net.coldlight.dbcrudapp.repository;
+package net.coldlight.dbcrudapp.repository.jdbc;
 
-import net.coldlight.dbcrudapp.model.Developer;
 import net.coldlight.dbcrudapp.model.Speciality;
+import net.coldlight.dbcrudapp.repository.JdbcUtils;
+import net.coldlight.dbcrudapp.repository.SpecialityRepository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SpecialityRepositoryImpl implements SpecialityRepository{
-    private static final Connection connection = DataBaseConnection.getInstance().getConnection();
+public class JdbcSpecialityRepositoryImpl implements SpecialityRepository {
 
     @Override
     public List<Speciality> getAll() {
         List<Speciality> specialtyList = new ArrayList<>();
-        try (Statement statement = connection.createStatement()) {
+        try (Statement statement = JdbcUtils.getStatement()) {
             String sql = "select * from specialities";
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
@@ -23,8 +23,7 @@ public class SpecialityRepositoryImpl implements SpecialityRepository{
                 specialty.setId(specialityId);
                 specialtyList.add(specialty);
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return specialtyList;
@@ -33,15 +32,14 @@ public class SpecialityRepositoryImpl implements SpecialityRepository{
     @Override
     public Speciality getByID(Long id) {
         Speciality specialty = new Speciality(null);
-        try (Statement statement = connection.createStatement()) {
-            String sql = "select * from specialities where id = " + (long)id;
+        try (Statement statement = JdbcUtils.getStatement()) {
+            String sql = String.format("select * from specialities where id = %s", id);
             ResultSet resultSet = statement.executeQuery(sql);
             resultSet.next();
             String specialityName = resultSet.getString("speciality_name");
             specialty.setId(id);
             specialty.setSpecialityName(specialityName);
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return specialty;
@@ -49,11 +47,11 @@ public class SpecialityRepositoryImpl implements SpecialityRepository{
 
     @Override
     public Speciality save(Speciality speciality) {
-        try (Statement statement = connection.createStatement()) {
+        try (Statement statement = JdbcUtils.getStatement()) {
             String sql = "insert into specialities (speciality_name) values('" + speciality.getSpecialityName() + "')";
+            //String sql = String.format("insert into specialities (speciality_name) values %s", speciality.getSpecialityName());
             statement.executeUpdate(sql);
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return speciality;
@@ -61,8 +59,8 @@ public class SpecialityRepositoryImpl implements SpecialityRepository{
 
     @Override
     public Speciality update(Speciality speciality) {
-        String sql = "update speciality speciality_name=? where id ='" + speciality.getId() + "'";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        String sql = String.format("update specialities set speciality_name=? where id = %s", speciality.getId());
+        try (PreparedStatement preparedStatement = JdbcUtils.getPreparedStatement(sql)) {
             preparedStatement.setString(1, speciality.getSpecialityName());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -73,11 +71,10 @@ public class SpecialityRepositoryImpl implements SpecialityRepository{
 
     @Override
     public void delete(Speciality speciality) {
-        try (Statement statement = connection.createStatement()) {
-            String sql = "delete from specialities where speciality_name = '" + speciality.getSpecialityName() + "'";
+        try (Statement statement = JdbcUtils.getStatement()) {
+            String sql = String.format("delete from specialities where id = %s", speciality.getId());
             statement.executeUpdate(sql);
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

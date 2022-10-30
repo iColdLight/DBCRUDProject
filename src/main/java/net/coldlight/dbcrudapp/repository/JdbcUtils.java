@@ -1,12 +1,10 @@
 package net.coldlight.dbcrudapp.repository;
 
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
-public class DataBaseConnection {
-    private static DataBaseConnection dataBaseConnection;
+public class JdbcUtils {
+    private static JdbcUtils dataBaseConnection;
     private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     private static final String DATABASE_URL = "jdbc:mysql://localhost/test1";
 
@@ -14,7 +12,7 @@ public class DataBaseConnection {
     private static final String PASSWORD = "Coldlight";
     private Connection connection;
 
-    private DataBaseConnection() {
+    private JdbcUtils() {
         try {
             Class.forName(JDBC_DRIVER);
             connection = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
@@ -23,15 +21,24 @@ public class DataBaseConnection {
         }
     }
 
-    public static DataBaseConnection getInstance() {
+    private static JdbcUtils getInstance() {
         if (dataBaseConnection == null) {
-            dataBaseConnection = new DataBaseConnection();
+            dataBaseConnection = new JdbcUtils();
         }
         return dataBaseConnection;
     }
 
-    public Connection getConnection() {
+    private Connection getConnection() {
         return connection;
     }
 
+    public static Statement getStatement () throws SQLException {
+        return getInstance().connection.createStatement();
+    }
+
+    public static PreparedStatement getPreparedStatement (String sql) throws SQLException {
+        return getInstance().connection.prepareStatement(sql);
+    }
 }
+
+
